@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orçamento de Impermeabilização | Villa Volpi</title>
+<style>
+:root{font-family:Inter,Arial,sans-serif;color:#17263b;background:#f3f6fa}*{box-sizing:border-box}body{margin:0}.wrap{max-width:1200px;margin:auto;padding:28px}header{background:#102944;color:white;padding:28px;border-radius:16px;margin-bottom:20px}header p{color:#bdd0e4}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}.card{background:white;border:1px solid #dfe6ef;border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:0 2px 9px #1232 7 0 08}label{display:block;font-size:13px;font-weight:700;margin-bottom:6px;color:#40536b}input{width:100%;padding:11px;border:1px solid #c9d5e3;border-radius:8px;font-size:15px}h2{margin-top:0;font-size:20px}small,.muted{color:#61718a}.metric{font-size:26px;font-weight:800;color:#0d476d;margin-top:8px}table{border-collapse:collapse;width:100%;min-width:650px}th,td{padding:12px;border-bottom:1px solid #e5eaf0;text-align:left}th{background:#edf3f9;font-size:13px}td input{max-width:140px}.scroll{overflow-x:auto}.warning{background:#fff6df;border-left:4px solid #d39b22;padding:13px;border-radius:6px}.btn{background:#0e6188;color:white;border:0;padding:12px 18px;border-radius:8px;cursor:pointer;margin-right:8px;font-weight:700}.btn.alt{background:#e8edf4;color:#183249}.negative{color:#a52c2c}.positive{color:#137552}@media print{body{background:white}.wrap{padding:0}.btn{display:none}.card{box-shadow:none;break-inside:avoid}header{print-color-adjust:exact}} 
+</style></head><body><div class="wrap">
+<header><h1>Orçamento de Impermeabilização</h1><p>Residencial Villa Volpi · Simulador de prazo, equipe, mão de obra e resultado financeiro</p></header>
+<section class="card"><h2>Parâmetros editáveis</h2><div class="grid">
+<div><label>Valor de venda / orçamento geral (R$)</label><input id="venda" type="number" value="2775734.85" min="0" step=".01"></div>
+<div><label>Materiais cotados (R$)</label><input id="materiais" type="number" value="1106294.87" min="0" step=".01"></div>
+<div><label>Prazo estabelecido (meses)</label><input id="prazo" type="number" value="6" min="1" step="1"></div>
+<div><label>Produtividade por dupla (m² acabados/mês)</label><input id="prod" type="number" value="470" min="1"></div>
+<div><label>Salário pedreiro (R$/mês)</label><input id="pedreiro" type="number" value="4500" min="0"></div>
+<div><label>Salário ajudante (R$/mês)</label><input id="ajudante" type="number" value="3500" min="0"></div>
+<div><label>Encargos e provisões (%) — estimativa</label><input id="encargos" type="number" value="70" min="0"></div>
+<div><label>Outros custos previstos (R$)</label><input id="outros" type="number" value="0" min="0" step=".01"></div>
+</div></section>
+<section class="card"><h2>Áreas de manta asfáltica — base PROASSP</h2><div class="scroll"><table><thead><tr><th>Grupo</th><th>Descrição</th><th>Área (m²)</th><th>Meses-dupla</th><th>Mão de obra proporcional</th></tr></thead><tbody>
+<tr><td>5</td><td>Áreas internas</td><td><input id="a5" type="number" value="2245.80" step=".01" min="0"></td><td id="m5"></td><td id="c5"></td></tr>
+<tr><td>7</td><td>Áreas externas / dupla manta</td><td><input id="a7" type="number" value="4941.91" step=".01" min="0"></td><td id="m7"></td><td id="c7"></td></tr>
+<tr><td>8</td><td>Coberturas</td><td><input id="a8" type="number" value="3507.43" step=".01" min="0"></td><td id="m8"></td><td id="c8"></td></tr>
+<tr><th colspan="2">Total</th><th id="area"></th><th id="mesesdupla"></th><th id="custoprop"></th></tr>
+</tbody></table></div><p class="muted">Premissa informada: uma dupla (pedreiro + ajudante) conclui 470 m²/mês, incluindo regularização, primer, duas mantas e proteção mecânica. A aplicação dessa produtividade aos grupos 5 e 8 é uma hipótese a validar, pois a especificação da planilha difere por área.</p></section>
+<section class="grid">
+<div class="card"><label>Duplas necessárias para o prazo</label><div class="metric" id="duplas">—</div><small id="pessoas"></small></div>
+<div class="card"><label>Custo mensal de uma dupla</label><div class="metric" id="cdupla">—</div></div>
+<div class="card"><label>Custo por m² acabado</label><div class="metric" id="cm2">—</div></div>
+<div class="card"><label>Folha mensal das equipes</label><div class="metric" id="folha">—</div></div>
+</section>
+<section class="card"><h2>Projeção financeira</h2><div class="scroll"><table><tbody>
+<tr><td>Receita / orçamento geral</td><td id="rVenda"></td></tr>
+<tr><td>Materiais cotados</td><td id="rMat"></td></tr>
+<tr><td>Mão de obra proporcional à produção</td><td id="rProp"></td></tr>
+<tr><td>Mão de obra com equipes inteiras por todo o prazo</td><td id="rPrazo"></td></tr>
+<tr><td>Outros custos previstos</td><td id="rOutros"></td></tr>
+<tr><th>Saldo preliminar (cenário equipes inteiras)</th><th id="saldo"></th></tr>
+<tr><th>Margem preliminar sobre receita</th><th id="margem"></th></tr>
+</tbody></table></div><p class="warning"><b>Atenção:</b> saldo e margem não são lucro líquido. O orçamento geral contempla outros sistemas além das áreas de manta aqui dimensionadas. Podem faltar materiais, mão de obra de outros serviços, tributos, equipamentos, mobilização, BDI e contingências. Os documentos de materiais foram considerados complementares.</p></section>
+<div><button class="btn" onclick="window.print()">Imprimir / salvar em PDF</button><button class="btn alt" onclick="save()">Salvar parâmetros no navegador</button><button class="btn alt" onclick="reset()">Restaurar valores iniciais</button></div>
+</div><script>
+const ids=['venda','materiais','prazo','prod','pedreiro','ajudante','encargos','outros','a5','a7','a8'];
+const defaults=Object.fromEntries(ids.map(id=>[id,document.getElementById(id).value]));
+const n=id=>Math.max(0,Number(document.getElementById(id).value)||0);
+const brl=v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const num=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const put=(id,value)=>document.getElementById(id).textContent=value;
+function calc(){
+const p=Math.max(1,n('prod')), prazo=Math.max(1,n('prazo'));
+const dupla=(n('pedreiro')+n('ajudante'))*(1+n('encargos')/100);
+let area=0;
+for(const [group,id] of [['5','a5'],['7','a7'],['8','a8']]){
+ const a=n(id);area+=a;put('m'+group,num(a/p));put('c'+group,brl(a/p*dupla));
+}
+const totalMeses=area/p, duplas=Math.ceil(totalMeses/prazo), custoProp=totalMeses*dupla, custoPrazo=duplas*prazo*dupla;
+const saldo=n('venda')-n('materiais')-custoPrazo-n('outros');
+put('area',num(area)+' m²');put('mesesdupla',num(totalMeses));put('custoprop',brl(custoProp));
+put('duplas',duplas);put('pessoas',duplas*2+' profissionais');put('cdupla',brl(dupla));put('cm2',brl(dupla/p));put('folha',brl(duplas*dupla));
+put('rVenda',brl(n('venda')));put('rMat',brl(n('materiais')));put('rProp',brl(custoProp));put('rPrazo',brl(custoPrazo));put('rOutros',brl(n('outros')));
+put('saldo',brl(saldo));put('margem',n('venda')?num(saldo/n('venda')*100)+'%':'—');
+document.getElementById('saldo').className=saldo<0?'negative':'positive';
+}
+function save(){try{localStorage.setItem('villa-volpi-orcamento',JSON.stringify(Object.fromEntries(ids.map(id=>[id,document.getElementById(id).value]))));alert('Parâmetros salvos neste navegador.')}catch(e){alert('Não foi possível salvar neste navegador.')}}
+function reset(){for(const id of ids)document.getElementById(id).value=defaults[id];calc()}
+try{const saved=JSON.parse(localStorage.getItem('villa-volpi-orcamento')||'null');if(saved)for(const id of ids)if(saved[id]!==undefined)document.getElementById(id).value=saved[id]}catch(e){}
+for(const id of ids)document.getElementById(id).addEventListener('input',calc);calc();
+</script></body></html>
